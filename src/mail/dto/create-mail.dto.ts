@@ -2,7 +2,7 @@ import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
 import validator from 'validator';
 
-export const createMailZodSechema = z.object({
+export const createMailSechema = z.object({
   name: z
     .string()
     .min(3, {
@@ -40,4 +40,4 @@ export const createMailZodSechema = z.object({
     .max(120, { message: 'Wiadomość nie może być dłóższa niż 120 znaków.' }),
 });
 
-export class CreateMailZodDto extends createZodDto(createMailZodSechema) {}
+export class CreateMailDto extends createZodDto(createMailSechema) {}
