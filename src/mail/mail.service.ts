@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { CreateMailDto } from './dto/create-mail.dto';
-import Email from 'emails';
+import Email from '../../emails';
 import { render } from '@react-email/components';
 
 @Injectable()
