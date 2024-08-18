@@ -2,8 +2,8 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MailService } from './mail.service';
 import { CreateMailDto } from './dto/create-mail.dto';
-import { ResponseMessage } from 'src/common/response/response-message.decorator';
-import { LogAction } from 'src/common/action/log-action.decorator';
+import { ResponseMessage } from '../common/response/response-message.decorator';
+import { LogAction } from '../common/action/log-action.decorator';
 
 @ApiTags('Messages')
 @Controller('send')
