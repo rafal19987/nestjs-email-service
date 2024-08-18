@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MailService } from './mail.service';
-import { CreateMailZodDto } from './dto/create-mail-zod.dto';
+import { CreateMailDto } from './dto/create-mail.dto';
 import { ResponseMessage } from 'src/common/response/response-message.decorator';
 import { LogAction } from 'src/common/action/log-action.decorator';
 
@@ -12,10 +12,10 @@ export class MailController {
 
   @Post()
   @ApiOperation({ summary: 'Send email' })
-  @ApiBody({ type: CreateMailZodDto })
+  @ApiBody({ type: CreateMailDto })
   @LogAction('Send new message', 'A new message was send')
   @ResponseMessage('Email has been sent correctly')
-  async sendEmail(@Body() createMailDto: CreateMailZodDto) {
+  async sendEmail(@Body() createMailDto: CreateMailDto) {
     return await this.mailService.sendEmail(createMailDto);
   }
 }

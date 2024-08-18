@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
-import { CreateMailZodDto } from './dto/create-mail-zod.dto';
+import { CreateMailDto } from './dto/create-mail.dto';
 import Email from 'emails';
 import { render } from '@react-email/components';
 
@@ -18,14 +18,8 @@ export class MailService {
     year: 'numeric',
   });
 
-  async sendEmail(createMailDto: CreateMailZodDto) {
+  async sendEmail(createMailDto: CreateMailDto) {
     const { name, surname, email, phone, message } = createMailDto;
-
-    if (!name || !surname || !email || !phone || !message)
-      throw new HttpException(
-        'Fill in all the details',
-        HttpStatus.BAD_REQUEST,
-      );
 
     const emailHtml = render(
       Email({
@@ -40,7 +34,7 @@ export class MailService {
     const mailOptions = {
       to: this.configService.getOrThrow('MAIL_TO'),
       subject: `[${this.dateFormatter.format(new Date())}] Nowa wiadomość z Osiakówki`,
-      text: 'Wiadomość z Osiakówki text',
+      text: 'Wiadomość z Osiakówki',
       date: this.dateFormatter.format(new Date()),
       html: emailHtml,
     };
