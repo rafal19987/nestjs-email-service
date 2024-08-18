@@ -10,6 +10,16 @@ import {
   Tailwind,
 } from '@react-email/components';
 
+function formatter(date) {
+  return new Intl.DateTimeFormat('pl', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
+}
+
 export default function Email({ name, surname, email, phone, message }) {
   return (
     <Tailwind
@@ -29,7 +39,7 @@ export default function Email({ name, surname, email, phone, message }) {
         </Head>
         <Container className="">
           <Heading className="text-sm lg:text-xl text-center" as="h1">
-            Masz nową wiadomość z Osiakówki
+            Otrzymano: {formatter(new Date())}
           </Heading>
           <Section className="space-y-2">
             <Row className="border-b border-neutral-300">
