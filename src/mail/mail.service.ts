@@ -2,6 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { CreateMailZodDto } from './dto/create-mail-zod.dto';
+import Email from 'emails';
+import { render } from '@react-email/components';
 
 @Injectable()
 export class MailService {
@@ -25,29 +27,22 @@ export class MailService {
         HttpStatus.BAD_REQUEST,
       );
 
+    const emailHtml = render(
+      Email({
+        name,
+        surname,
+        email,
+        phone,
+        message,
+      }),
+    );
+
     const mailOptions = {
       to: this.configService.getOrThrow('MAIL_TO'),
       subject: `[${this.dateFormatter.format(new Date())}] Nowa wiadomość z Osiakówki`,
       text: 'Wiadomość z Osiakówki text',
       date: this.dateFormatter.format(new Date()),
-      html: `<ul>
-            <li>
-              <p>Imię: ${name}</p>
-            </li>
-            <li>
-              <p>Nazwisko: ${surname}</p>
-            </li>
-            <li>
-              <p>Email: ${email}</p>
-            </li>
-            <li>
-              <p>Numer telefonu: ${phone}</p>
-            </li>
-            <li>
-              <p>Wiadomość: ${message}</p>
-            </li>
-
-          </ul>`,
+      html: emailHtml,
     };
 
     try {
