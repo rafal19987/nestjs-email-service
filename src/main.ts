@@ -13,6 +13,18 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
   app.useGlobalInterceptors(new ResponseInterceptor(reflector));
 
+  if (process.env.NODE_ENV === 'production') {
+    app.enableCors({
+      origin: (origin, callback) => {
+        if (origin === 'https://osiakowka.pl') {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+    });
+  }
+
   app.enableCors();
 
   const config = new DocumentBuilder()
